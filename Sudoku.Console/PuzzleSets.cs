@@ -8,7 +8,7 @@ namespace Sudoku.Benchmark
 {
     public class PuzzleSets
     {
-        private readonly static int?[,] _puzzle = new int?[,]
+        private readonly static int?[,] _puzzle_1 = new int?[,]
   {
             {4, null, 5, null, null, null, null, 7, null},
             {7,6,3,null,1,null,4,null,null },
@@ -23,7 +23,7 @@ namespace Sudoku.Benchmark
             {5,4,null,7,8,null,null,null,3 },
   };
 
-        private readonly static int?[,] _puzzleSolved = new int?[,]
+        private readonly static int?[,] _puzzle_1_Solved = new int?[,]
         {
             {4, 1, 5, 2, 9, 6, 3, 7, 8},
             {7,6,3,5,1,8,4,2,9 },
@@ -38,9 +38,9 @@ namespace Sudoku.Benchmark
             {5,4,9,7,8,2,6,1,3 },
         };
 
-        public static Cell[,] GetSet1()
+        public static Cell[,] GetSolvedSet_1()
         {
-            return CreateCellsFrom(_puzzleSolved);
+            return CreateCellsFrom(_puzzle_1_Solved);
         }
 
         private static Cell[,] CreateCellsFrom(int?[,] rawValues)

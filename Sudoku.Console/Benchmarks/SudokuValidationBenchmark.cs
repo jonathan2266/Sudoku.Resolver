@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sudoku.Benchmark
+namespace Sudoku.Benchmark.Benchmarks
 {
     [SimpleJob(warmupCount: 10, iterationCount: 10)]
     //[EtwProfiler(performExtraBenchmarksRun: false)] 
@@ -23,7 +23,7 @@ namespace Sudoku.Benchmark
         [GlobalSetup]
         public void GlobalSetup()
         {
-            _board = new SudokuBoard(PuzzleSets.GetSet1());
+            _board = new SudokuBoard(PuzzleSets.GetSolvedSet_1());
         }
 
         [Benchmark(Baseline = true)]
@@ -35,7 +35,7 @@ namespace Sudoku.Benchmark
         [Benchmark]
         public bool IsBoardResolved()
         {
-           return _board.IsBoardResolved();
+            return _board.IsBoardResolved();
         }
 
     }
