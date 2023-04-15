@@ -101,14 +101,14 @@ namespace Sudoku
                 {
                     return false;
                 }
+            }
 
-                for (int column = 0; column < _board.GetLength(_columnDimension); column++)
+            for (int column = 0; column < _board.GetLength(_columnDimension); column++)
+            {
+                var isColumnValid = IsBoardColumnValid(GetBoardColumn(column));
+                if (!isColumnValid)
                 {
-                    var isColumnValid = IsBoardColumnValid(GetBoardColumn(column));
-                    if (!isColumnValid)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
 
