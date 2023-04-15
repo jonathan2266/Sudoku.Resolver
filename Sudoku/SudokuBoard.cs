@@ -9,15 +9,13 @@ namespace Sudoku
         private readonly int _boardSize = 9;
         private readonly int _internalBoardSquareSize = 3;
         private readonly int _internalBoardSquareUniqueNumbers;
-        private readonly int _internalBoardSquareStartNumber = 1;
 
         private readonly int _rowDimension = 0;
         private readonly int _columnDimension = 1;
 
 
         private readonly Cell[,] _board;
-
-        private readonly Dictionary<int, bool> _duplicateNumberLookup;
+        private readonly HashSet<int> _duplicateNumberDetector;
 
         public SudokuBoard(Cell[,] cells)
         {
@@ -25,12 +23,7 @@ namespace Sudoku
             _board = cells;
             _internalBoardSquareUniqueNumbers = _internalBoardSquareSize * _internalBoardSquareSize;
 
-
-            _duplicateNumberLookup = new Dictionary<int, bool>(_internalBoardSquareUniqueNumbers);
-            for (int i = _internalBoardSquareStartNumber; i < _internalBoardSquareUniqueNumbers + _internalBoardSquareStartNumber; i++)
-            {
-                _duplicateNumberLookup.Add(i, false);
-            }
+            _duplicateNumberDetector = new HashSet<int>(_internalBoardSquareUniqueNumbers);
         }
 
         public ref Cell this[int row, int column]
@@ -66,8 +59,6 @@ namespace Sudoku
             {
                 return false;
             }
-
-
         }
 
         public bool IsBoardResolved()
@@ -132,82 +123,79 @@ namespace Sudoku
             return true;
         }
 
-        private ReadOnlySpan2D<Cell> GetSudokuSquare(int row, int column)
+        private Span2D<Cell> GetSudokuSquare(int row, int column)
         {
-            ReadOnlySpan2D<Cell> boardSpan = _board;
+            Span2D<Cell> boardSpan = _board;
             return boardSpan.Slice(row, column, _internalBoardSquareSize, _internalBoardSquareSize);
         }
 
-        private ReadOnlySpan<Cell> GetBoardRow(int row)
+        private Span<Cell> GetBoardRow(int row)
         {
-            ReadOnlySpan2D<Cell> boardSpan = _board;
+            Span2D<Cell> boardSpan = _board;
             return boardSpan.GetRowSpan(row);
         }
 
-        private ReadOnlyRefEnumerable<Cell> GetBoardColumn(int column)
+        private RefEnumerable<Cell> GetBoardColumn(int column)
         {
-            ReadOnlySpan2D<Cell> boardSpan = _board;
+            Span2D<Cell> boardSpan = _board;
             return boardSpan.GetColumn(column);
         }
 
-        private bool IsBoardRowValid(ReadOnlySpan<Cell> boardRow)
+        private bool IsBoardRowValid(Span<Cell> boardRow)
         {
-            ResetLookup(_duplicateNumberLookup);
+            _duplicateNumberDetector.Clear();
 
+            int totalValuesAdded = 0;
             for (int i = 0; i < boardRow.Length; i++)
             {
-                var cell = boardRow[i];
-                if (IsCellValueDuplicateInContinuationDirection(ref cell, _duplicateNumberLookup))
+                ref var cell = ref boardRow[i];
+                if (cell.Value.HasValue)
                 {
-                    return false;
+                    totalValuesAdded++;
+                    _duplicateNumberDetector.Add(cell.Value.Value);
                 }
             }
 
-            return true;
+            return _duplicateNumberDetector.Count == totalValuesAdded;
         }
 
-        private bool IsBoardColumnValid(ReadOnlyRefEnumerable<Cell> boardColumn)
+        private bool IsBoardColumnValid(RefEnumerable<Cell> boardColumn)
         {
-            ResetLookup(_duplicateNumberLookup);
+            _duplicateNumberDetector.Clear();
 
+            int totalValuesAdded = 0;
             for (int i = 0; i < boardColumn.Length; i++)
             {
-                var cell = boardColumn[i];
-                if (IsCellValueDuplicateInContinuationDirection(ref cell, _duplicateNumberLookup))
+                ref var cell = ref boardColumn[i];
+                if (cell.Value.HasValue)
                 {
-                    return false;
+                    totalValuesAdded++;
+                    _duplicateNumberDetector.Add(cell.Value.Value);
                 }
             }
 
-            return true;
+            return _duplicateNumberDetector.Count == totalValuesAdded;
         }
 
-        private bool IsSudokuSquareValid(ReadOnlySpan2D<Cell> square)
+        private bool IsSudokuSquareValid(Span2D<Cell> square)
         {
-            ResetLookup(_duplicateNumberLookup);
+            _duplicateNumberDetector.Clear();
 
+            int totalValuesAdded = 0;
             for (int row = 0; row < square.Width; row++)
             {
                 for (int column = 0; column < square.Height; column++)
                 {
-                    var cell = square[row, column];
-
-                    if (IsCellValueDuplicateInContinuationDirection(ref cell, _duplicateNumberLookup))
+                    ref var cell = ref square[row, column];
+                    if (cell.Value.HasValue)
                     {
-                        return false;
+                        totalValuesAdded++;
+                        _duplicateNumberDetector.Add(cell.Value.Value);
                     }
                 }
             }
 
-            return true;
-        }
-
-        private void ResetLookup(Dictionary<int, bool> lookup)
-        {
-            foreach (var key in lookup.Keys)
-            {
-                lookup[key] = false;
-            }
+            return _duplicateNumberDetector.Count == totalValuesAdded;
         }
 
         private bool DoesEachCellHaveAValue()
@@ -226,42 +214,5 @@ namespace Sudoku
 
             return true;
         }
-
-        private static bool IsCellValueDuplicateInContinuationDirection(ref Cell cell, Dictionary<int, bool> lookupContinuation)
-        {
-            if (!cell.Value.HasValue)
-            {
-                return false;
-            }
-
-            if (lookupContinuation[cell.Value.Value])
-            {
-                return true;
-            }
-            else
-            {
-                lookupContinuation[cell.Value.Value] = true;
-            }
-
-            return false;
-        }
-    }
-
-    public struct Cell
-    {
-        public Cell()
-        {
-            IsFixed = false;
-            Value = null;
-        }
-
-        public Cell(int value)
-        {
-            IsFixed = true;
-            Value = value;
-        }
-
-        public bool IsFixed { get; init; }
-        public int? Value { get; set; }
     }
 }
