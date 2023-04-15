@@ -6,7 +6,7 @@ namespace Sudoku.Benchmark
 {
     public class Program
     {
-        private static readonly bool _startBenchmarks = false;
+        private static readonly bool _startBenchmarks = true;
 
         static void Main(string[] args)
         {
@@ -38,6 +38,7 @@ namespace Sudoku.Benchmark
 
             for (int i = 0; i < 1000000; i++)
             {
+                var isValid = board.IsBoardStateValid();
                 isSolved = board.IsBoardResolved();
             }
         }
