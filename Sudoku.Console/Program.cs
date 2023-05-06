@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 using Sudoku.Benchmark.Benchmarks;
+using Sudoku.Puzzles.Sets;
 using System;
 
 namespace Sudoku.Benchmark
@@ -32,7 +33,7 @@ namespace Sudoku.Benchmark
 
         private static void RunCustomTest()
         {
-            var board = new SudokuBoard(PuzzleSets.GetSolvedSet_1());
+            var board = new SudokuBoard(Set_1.Solved);
 
             var isSolved = false;
 

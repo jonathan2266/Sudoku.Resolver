@@ -1,13 +1,14 @@
 ﻿using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Enumerables;
 using System;
+using System.Linq;
 
 namespace Sudoku
 {
     public class SudokuBoard
     {
-        private readonly int _boardSize = 9;
-        private readonly int _internalBoardSquareSize = 3;
+        private readonly int _boardSize;
+        private readonly int _internalBoardSquareSize;
         private readonly int _internalBoardSquareUniqueNumbers;
 
         private readonly int _rowDimension = 0;
@@ -16,11 +17,17 @@ namespace Sudoku
 
         private readonly Cell[,] _board;
         private readonly HashSet<int> _duplicateNumberDetector;
+        private static readonly int[] _supportedBoardSizes = new int[2] { 9, 16 };
 
         public SudokuBoard(Cell[,] cells)
         {
-            _board = new Cell[_boardSize, _boardSize];
+            IsInitialBoardConfigurationValid(cells);
+
             _board = cells;
+            _boardSize = cells.GetLength(_rowDimension);
+            _internalBoardSquareSize = Convert.ToInt32(Math.Sqrt(_boardSize));
+            ValidateBoardSizeAndInternalSquareSize();
+
             _internalBoardSquareUniqueNumbers = _internalBoardSquareSize * _internalBoardSquareSize;
 
             _duplicateNumberDetector = new HashSet<int>(_internalBoardSquareUniqueNumbers);
@@ -34,6 +41,10 @@ namespace Sudoku
             }
         }
 
+        public int Size { get { return _boardSize; } }
+        public int InternalSquareSize { get { return _internalBoardSquareSize; } }
+
+
         public bool IsRowValid(int row)
         {
             return IsBoardRowValid(GetBoardRow(row));
@@ -46,29 +57,17 @@ namespace Sudoku
 
         public bool IsSquareValid(int row, int column)
         {
-            return IsSudokuSquareValid(GetSudokuSquare(row / _internalBoardSquareSize, column / _internalBoardSquareSize));
+            return IsSudokuSquareValid(GetSudokuSquare(row, column));
         }
 
         public bool IsBoardStateValid()
         {
-            if (ValidateIfAllRowsAndColumnsAreValid() && ValidateAllBoardSquares())
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return ValidateIfAllRowsAndColumnsAreValid() && ValidateAllBoardSquares();
         }
 
         public bool IsBoardResolved()
         {
-            if (IsBoardStateValid() && DoesEachCellHaveAValue())
-            {
-                return true;
-            }
-
-            return false;
+            return IsBoardStateValid() && DoesEachCellHaveAValue();
         }
 
         public void ResetState()
@@ -126,7 +125,10 @@ namespace Sudoku
         private Span2D<Cell> GetSudokuSquare(int row, int column)
         {
             Span2D<Cell> boardSpan = _board;
-            return boardSpan.Slice(row, column, _internalBoardSquareSize, _internalBoardSquareSize);
+            int leftNormalizedRow = row / _internalBoardSquareSize * _internalBoardSquareSize;
+            int leftNormalizedColumn = column / InternalSquareSize * InternalSquareSize;
+
+            return boardSpan.Slice(leftNormalizedRow, leftNormalizedColumn, _internalBoardSquareSize, _internalBoardSquareSize);
         }
 
         private Span<Cell> GetBoardRow(int row)
@@ -213,6 +215,27 @@ namespace Sudoku
             }
 
             return true;
+        }
+
+        private void IsInitialBoardConfigurationValid(Cell[,] cells)
+        {
+            if (cells.GetLength(_rowDimension) != cells.GetLength(_columnDimension))
+            {
+                throw new ArgumentException("The board needs to be square", nameof(cells));
+            }
+
+            if (!_supportedBoardSizes.Contains(cells.GetLength(_rowDimension)))
+            {
+                throw new ArgumentException($"The board has an invalid size. Use one of the following supported sizes. {string.Join(',', _supportedBoardSizes)}", nameof(cells));
+            }
+        }
+
+        private void ValidateBoardSizeAndInternalSquareSize()
+        {
+            if (_internalBoardSquareSize * _internalBoardSquareSize != _boardSize)
+            {
+                throw new InvalidOperationException($"The boards internal square {_internalBoardSquareSize} and board size {_boardSize} are not configured correctly.");
+            }
         }
     }
 }

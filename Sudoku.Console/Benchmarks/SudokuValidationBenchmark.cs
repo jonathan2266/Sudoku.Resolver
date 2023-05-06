@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Diagnostics.Windows.Configs;
+using Sudoku.Puzzles.Sets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace Sudoku.Benchmark.Benchmarks
         [GlobalSetup]
         public void GlobalSetup()
         {
-            _board = new SudokuBoard(PuzzleSets.GetSolvedSet_1());
+            _board = new SudokuBoard(Set_1.Solved);
         }
 
         [Benchmark(Baseline = true)]
