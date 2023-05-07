@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Enumerables;
-using System;
-using System.Linq;
 
 namespace Sudoku
 {
@@ -25,7 +23,7 @@ namespace Sudoku
 
             _board = cells;
             _boardSize = cells.GetLength(_rowDimension);
-            _internalBoardSquareSize = Convert.ToInt32(Math.Sqrt(_boardSize));
+            _internalBoardSquareSize = (int)Math.Sqrt(_boardSize);
             ValidateBoardSizeAndInternalSquareSize();
 
             _internalBoardSquareUniqueNumbers = _internalBoardSquareSize * _internalBoardSquareSize;
@@ -84,19 +82,12 @@ namespace Sudoku
 
         private bool ValidateIfAllRowsAndColumnsAreValid()
         {
-            for (int row = 0; row < _board.GetLength(_rowDimension); row++)
+            for (int rowAndColumn = 0; rowAndColumn < _board.GetLength(_rowDimension); rowAndColumn++)
             {
-                var isRowValid = IsBoardRowValid(GetBoardRow(row));
-                if (!isRowValid)
-                {
-                    return false;
-                }
-            }
+                var isRowValid = IsBoardRowValid(GetBoardRow(rowAndColumn));
+                var isColumnValid = IsBoardColumnValid(GetBoardColumn(rowAndColumn));
 
-            for (int column = 0; column < _board.GetLength(_columnDimension); column++)
-            {
-                var isColumnValid = IsBoardColumnValid(GetBoardColumn(column));
-                if (!isColumnValid)
+                if (!isRowValid || !isColumnValid)
                 {
                     return false;
                 }
