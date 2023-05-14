@@ -10,4 +10,19 @@
     <ProjectReference Include="..\Sudoku\Sudoku.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Puzzles.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Puzzles.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Puzzles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Puzzles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

@@ -70,6 +70,11 @@ namespace Sudoku
             return IsBoardStateValid() && DoesEachCellHaveAValue();
         }
 
+        public static SudokuBoard FromOrderedCells(Cell[,] cells)
+        {
+            return new SudokuBoard(cells);
+        }
+
         public void ResetState()
         {
             for (int row = 0; row < _board.GetLength(_rowDimension); row++)
