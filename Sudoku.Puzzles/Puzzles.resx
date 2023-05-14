@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="all_17_clue_sudokus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\all_17_clue_sudokus.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="hard_sudokus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\hard_sudokus.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="hard_sudokus_solved" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\hard_sudokus_solved.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="hard_sudoku_challange_url" xml:space="preserve">
+    <value>https://codegolf.stackexchange.com/questions/190727/the-fastest-sudoku-solver</value>
+  </data>
   <data name="Sudoku_16_unsolved_nr1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\16_puzzle.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

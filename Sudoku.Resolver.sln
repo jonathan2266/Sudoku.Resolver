@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Web.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Tests", "Sudoku.Parser.Tests\Sudoku.Parser.Tests.csproj", "{A0E4A11A-8730-4A27-B7AF-C2056C722510}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.File", "Sudoku.Parser.File\Sudoku.Parser.File.csproj", "{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,8 +9,10 @@ namespace Sudoku.Benchmark
     {
         private static readonly bool _startBenchmarks = true;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            await Task.Delay(1);
+
             if (_startBenchmarks)
             {
                 RunBenchmarks();
@@ -29,6 +31,7 @@ namespace Sudoku.Benchmark
         private static void RunBenchmarks()
         {
             var summary = BenchmarkRunner.Run<SudokuValidationBenchmark>();
+            var summery2 = BenchmarkRunner.Run<SudokuChallangeReadingBenchmark>();
         }
 
         private static void RunCustomTest()

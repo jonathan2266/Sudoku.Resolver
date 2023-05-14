@@ -17,7 +17,7 @@ namespace Sudoku.Parser.Web.Sudoku
         private const string _valueAttribute = "v";
         private const string _isFixedValueCellClass = "fixe";
 
-        private readonly ValueTask<IEnumerable<SudokuBoard>> _emptyValueResultCollection = new(Enumerable.Empty<SudokuBoard>());
+        private readonly Task<IEnumerable<SudokuBoard>> _emptyValueResultCollection = Task.FromResult(Enumerable.Empty<SudokuBoard>());
 
         public RetrievePartialWebFormattedPuzzle(string html, INormalize normalize)
         {
@@ -27,7 +27,7 @@ namespace Sudoku.Parser.Web.Sudoku
             _document.LoadHtml(html);
         }
 
-        public ValueTask<IEnumerable<SudokuBoard>> Load()
+        public Task<IEnumerable<SudokuBoard>> Load()
         {
             var baseElement = _document.GetElementbyId(_baseElementId);
             if (baseElement == null)
@@ -45,7 +45,7 @@ namespace Sudoku.Parser.Web.Sudoku
                 return _emptyValueResultCollection;
             }
 
-            return ValueTask.FromResult<IEnumerable<SudokuBoard>>(new SudokuBoard[] {
+            return Task.FromResult<IEnumerable<SudokuBoard>>(new SudokuBoard[] {
                 SudokuBoard.FromOrderedCells(validator.ToOrderedCollection())
             });
         }

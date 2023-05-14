@@ -8,6 +8,6 @@ namespace Sudoku.Parser
 {
     public interface IRetrievePuzzle
     {
-        ValueTask<IEnumerable<SudokuBoard>> Load();
+        Task<IEnumerable<SudokuBoard>> Load();
     }
 }

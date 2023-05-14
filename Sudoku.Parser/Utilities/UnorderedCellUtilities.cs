@@ -68,7 +68,7 @@ namespace Sudoku.Parser.Utilities
 
             foreach (var rowCollection in cells.GroupBy(x => x.Row))
             {
-                var allColumns = rowCollection.Select(x => x.Value);
+                var allColumns = rowCollection.Select(x => x.Column);
                 var distinctColumnCount = allColumns.Distinct().Count();
 
                 if (allColumns.Count() != distinctColumnCount)
@@ -87,7 +87,7 @@ namespace Sudoku.Parser.Utilities
 
             foreach (var rowCollection in cells.GroupBy(x => x.Column))
             {
-                var allColumns = rowCollection.Select(x => x.Value);
+                var allColumns = rowCollection.Select(x => x.Row);
                 var distinctColumnCount = allColumns.Distinct().Count();
 
                 if (allColumns.Count() != distinctColumnCount)

@@ -61,6 +61,60 @@ namespace Sudoku.Puzzles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 49151
+        ///000000010400000000020000000000050407008000300001090000300400200050100000000806000
+        ///000000010400000000020000000000050604008000300001090000300400200050100000000807000
+        ///000000012000035000000600070700000300000400800100000000000120000080000040050000600
+        ///000000012003600000000007000410020000000500300700000600280000040000300500000000000
+        ///000000012008030000000000040120500000000004700060000000507000300000620000000100000
+        ///000000012040050000000009000070600400000100000000000050000087500601000300200000000
+        ///0000000 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string all_17_clue_sudokus {
+            get {
+                return ResourceManager.GetString("all_17_clue_sudokus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://codegolf.stackexchange.com/questions/190727/the-fastest-sudoku-solver.
+        /// </summary>
+        public static string hard_sudoku_challange_url {
+            get {
+                return ResourceManager.GetString("hard_sudoku_challange_url", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10000
+        ///000075400000000008080190000300001060000000034000068170204000603900000020530200000
+        ///300000000050703008000028070700000043000000000003904105400300800100040000968000200
+        ///302609005500730000000000900000940000000000109000057060008500006000000003019082040
+        ///530000008007000030200006901000500200090370004000981000300040560000090000000007080
+        ///008310900095000160000000005000400000000080049006072000000001030000240607001008200
+        ///000400970000051600042000010030000000070508064000070000700030000300090000005864009
+        ///0605000 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string hard_sudokus {
+            get {
+                return ResourceManager.GetString("hard_sudokus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10000
+        ///000075400000000008080190000300001060000000034000068170204000603900000020530200000,693875412145632798782194356357421869816957234429368175274519683968743521531286947
+        ///300000000050703008000028070700000043000000000003904105400300800100040000968000200,387419526259763418641528379716285943594631782823974165472396851135842697968157234
+        ///302609005500730000000000900000940000000000109000057060008500006000000003019082040,382619475594738621176425938863941752457263189921857364738594216245176893619382547
+        ///5300000080 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string hard_sudokus_solved {
+            get {
+                return ResourceManager.GetString("hard_sudokus_solved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;div id=&quot;grilleJeu&quot;&gt;
         ///    &lt;div id=&quot;c_0&quot; class=&quot;c&quot; l=&quot;1&quot; c=&quot;1&quot; r=&quot;1&quot; v=&quot;7&quot;&gt;
         ///        &lt;p&gt;7&lt;/p&gt;
