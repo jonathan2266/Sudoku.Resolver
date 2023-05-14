@@ -11,18 +11,20 @@
             {"5", 5 },
             {"6", 6 },
             {"7",7 },
-            {"9", 8 },
-            {"a", 9 },
-            {"b", 10 },
-            {"c", 11 },
-            {"d", 12 },
-            {"e", 13 },
-            {"f", 14 },
-            {"g", 15 },
+            {"8",8 },
+            {"9", 9 },
+            {"a", 10 },
+            {"b", 11 },
+            {"c", 12 },
+            {"d", 13 },
+            {"e", 14 },
+            {"f", 15 },
+            {"g", 16 },
         };
 
         public int Map(string value)
         {
+            value = value.ToLowerInvariant();
             return _letterToNumberLookupTable[value];
         }
     }

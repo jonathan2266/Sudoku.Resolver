@@ -9,10 +9,12 @@ namespace Sudoku.Parser.Utilities
     public class UnorderedCellUtilities
     {
         private readonly IEnumerable<UnorderedCell> _cells;
+        private readonly Boundary _boundary;
 
-        public UnorderedCellUtilities(IEnumerable<UnorderedCell> cells)
+        public UnorderedCellUtilities(IEnumerable<UnorderedCell> cells, Boundary boundary)
         {
             _cells = cells ?? throw new ArgumentNullException(nameof(cells));
+            _boundary = boundary;
         }
 
         public bool IsValidCollection()
@@ -38,14 +40,14 @@ namespace Sudoku.Parser.Utilities
             return ProjectStructureToFixedArray(boundary);
         }
 
-        public static UnorderedCellUtilities FromCollection(IEnumerable<UnorderedCell> cells)
+        public static UnorderedCellUtilities FromCollection(IEnumerable<UnorderedCell> cells, Boundary boundary)
         {
-            return new UnorderedCellUtilities(cells);
+            return new UnorderedCellUtilities(cells, boundary);
         }
 
         private Cell[,] ProjectStructureToFixedArray(Boundary boundary)
         {
-            Cell[,] projectedStructure = new Cell[boundary.UpperRow, boundary.UpperColumn];
+            Cell[,] projectedStructure = new Cell[boundary.RowLength, boundary.ColumnLength];
 
             foreach (var item in _cells)
             {
@@ -57,10 +59,7 @@ namespace Sudoku.Parser.Utilities
 
         private Boundary DetermineBoundaries()
         {
-            var upperRowValue = _cells.Select(x => x.Row).Max();
-            var upperColumnValue = _cells.Select(x => x.Column).Max();
-
-            return new Boundary(upperRowValue, upperColumnValue);
+            return _boundary;
         }
 
         private static bool HasUnorderedCollectionHaveDuplicateRows(IEnumerable<UnorderedCell> cells)
@@ -69,7 +68,7 @@ namespace Sudoku.Parser.Utilities
 
             foreach (var rowCollection in cells.GroupBy(x => x.Row))
             {
-                var allColumns = rowCollection.Select(x => x.Column);
+                var allColumns = rowCollection.Select(x => x.Value);
                 var distinctColumnCount = allColumns.Distinct().Count();
 
                 if (allColumns.Count() != distinctColumnCount)
@@ -88,7 +87,7 @@ namespace Sudoku.Parser.Utilities
 
             foreach (var rowCollection in cells.GroupBy(x => x.Column))
             {
-                var allColumns = rowCollection.Select(x => x.Row);
+                var allColumns = rowCollection.Select(x => x.Value);
                 var distinctColumnCount = allColumns.Distinct().Count();
 
                 if (allColumns.Count() != distinctColumnCount)
@@ -101,16 +100,16 @@ namespace Sudoku.Parser.Utilities
             return hasDuplicates;
         }
 
-        internal readonly struct Boundary
+        public readonly struct Boundary
         {
-            public Boundary(int row, int column)
+            public Boundary(int length)
             {
-                UpperRow = row;
-                UpperColumn = column;
+                RowLength = length;
+                ColumnLength = length;
             }
 
-            public int UpperRow { get; init; }
-            public int UpperColumn { get; init; }
+            public int RowLength { get; init; }
+            public int ColumnLength { get; init; }
         }
     }
 }

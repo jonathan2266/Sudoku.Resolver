@@ -13,9 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Tests", "Sudoku.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Puzzles", "Sudoku.Puzzles\Sudoku.Puzzles.csproj", "{03073234-6341-4363-9E91-B3D2E59F5FD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser", "Sudoku.Parser\Sudoku.Parser.csproj", "{9F3694FF-88AE-4250-AAA7-C936B52D2B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser", "Sudoku.Parser\Sudoku.Parser.csproj", "{9F3694FF-88AE-4250-AAA7-C936B52D2B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Web", "Sudoku.Parser.Web\Sudoku.Parser.Web.csproj", "{2B92FEE5-EF74-4B8E-A0D3-209C6EA6238B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser.Web", "Sudoku.Parser.Web\Sudoku.Parser.Web.csproj", "{2B92FEE5-EF74-4B8E-A0D3-209C6EA6238B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Web.Tests", "Sudoku.Parser.Web.Tests\Sudoku.Parser.Web.Tests.csproj", "{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Tests", "Sudoku.Parser.Tests\Sudoku.Parser.Tests.csproj", "{A0E4A11A-8730-4A27-B7AF-C2056C722510}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,12 +51,22 @@ Global
 		{2B92FEE5-EF74-4B8E-A0D3-209C6EA6238B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B92FEE5-EF74-4B8E-A0D3-209C6EA6238B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B92FEE5-EF74-4B8E-A0D3-209C6EA6238B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0E4A11A-8730-4A27-B7AF-C2056C722510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3B08002F-7192-4BB0-B5E5-9A554412BFA3} = {B7B52A19-7E8A-4314-B254-3385C3A897AB}
+		{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB} = {B7B52A19-7E8A-4314-B254-3385C3A897AB}
+		{A0E4A11A-8730-4A27-B7AF-C2056C722510} = {B7B52A19-7E8A-4314-B254-3385C3A897AB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4EC77C65-2A54-4345-A9F7-D1260A916E05}
