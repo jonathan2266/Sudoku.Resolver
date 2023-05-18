@@ -9,14 +9,14 @@ namespace Sudoku.Parser.Web.Tests
         private readonly INormalize _normalizer = new HexaDecimalNormalizerWithSingleOffset();
         private RetrievePartialWebFormattedPuzzle _retriever = null;
 
-        private readonly Cell _cell_column_4_row_1_is_e;
+        private readonly Cell _cell_column_3_row_7_is_e;
         private readonly string _cellValueE = "e";
-        private readonly int _column4 = 4;
-        private readonly int _row1 = 1;
+        private readonly int _column3 = 3;
+        private readonly int _row7 = 7;
 
         public RetrievePartialWebFormattedPuzzleTests()
         {
-            _cell_column_4_row_1_is_e = new(_normalizer.Map(_cellValueE));
+            _cell_column_3_row_7_is_e = new(_normalizer.Map(_cellValueE));
         }
 
         [TestInitialize]
@@ -56,7 +56,7 @@ namespace Sudoku.Parser.Web.Tests
         {
             var board = (await _retriever.Load()).First();
 
-            bool areValuesEqual = board[_row1, _column4] == _cell_column_4_row_1_is_e;
+            bool areValuesEqual = board[_row7, _column3] == _cell_column_3_row_7_is_e;
 
             Assert.IsTrue(areValuesEqual);
         }

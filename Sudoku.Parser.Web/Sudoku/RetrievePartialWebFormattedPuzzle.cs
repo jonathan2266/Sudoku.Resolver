@@ -13,7 +13,7 @@ namespace Sudoku.Parser.Web.Sudoku
         private const string _baseElementId = "grilleJeu";
         private const string _cellClass = "c";
         private const string _columnAttribute = "c";
-        private const string _rowAttribute = "r";
+        private const string _rowAttribute = "l";
         private const string _valueAttribute = "v";
         private const string _isFixedValueCellClass = "fixe";
 

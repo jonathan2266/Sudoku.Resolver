@@ -138,5 +138,14 @@ namespace Sudoku.Puzzles {
                 return ResourceManager.GetString("Sudoku_16_unsolved_nr1", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://1sudoku.com/sudoku-variants/super-sudoku-16x16/expert.
+        /// </summary>
+        public static string sudoku_website {
+            get {
+                return ResourceManager.GetString("sudoku_website", resourceCulture);
+            }
+        }
     }
 }

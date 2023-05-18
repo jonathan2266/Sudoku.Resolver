@@ -133,4 +133,7 @@
   <data name="Sudoku_16_unsolved_nr1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\16_puzzle.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="sudoku_website" xml:space="preserve">
+    <value>https://1sudoku.com/sudoku-variants/super-sudoku-16x16/expert</value>
+  </data>
 </root>
