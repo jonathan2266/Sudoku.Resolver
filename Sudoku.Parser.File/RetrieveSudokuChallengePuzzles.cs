@@ -78,13 +78,17 @@ namespace Sudoku.Parser.File
             {
                 if (line[i] != '0')
                 {
-                    collection.Add(ToCell(row, column++, line[i]));
+                    collection.Add(ToCell(row, column, line[i]));
                 }
 
                 if (_boundary.RowLength == column + 1)
                 {
                     column = 0;
                     row += 1;
+                }
+                else
+                {
+                    ++column;
                 }
             }
 
