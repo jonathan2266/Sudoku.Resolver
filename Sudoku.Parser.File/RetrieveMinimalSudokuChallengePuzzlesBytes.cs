@@ -1,4 +1,5 @@
-﻿using Sudoku.Parser.Utilities;
+﻿using Sudoku.Parser.Readers;
+using Sudoku.Parser.Utilities;
 using System.Text;
 
 namespace Sudoku.Parser.File
@@ -10,19 +11,17 @@ namespace Sudoku.Parser.File
         private static readonly int _expectedPuzzleLength = _boundary.ColumnLength * _boundary.RowLength;
         private static readonly int _utf8NumberOfset = 48;
 
-        private readonly byte[] _fileContents;
-
-        public RetrieveMinimalSudokuChallengePuzzlesBytes(byte[] fileContents)
+        public RetrieveMinimalSudokuChallengePuzzlesBytes()
         {
-            _fileContents = fileContents;
+
         }
 
-        public Task<IEnumerable<SudokuBoard>> Load()
+        public async Task<IEnumerable<SudokuBoard>> Load(IReader reader)
         {
-            var contents = _fileContents;
+            var contents = await ReadBytesFromReader(reader);
             var (TotalPuzzle, FirstPuzzleIndex) = ReadExpectedPuzzleAmount(contents);
 
-            return Task.FromResult<IEnumerable<SudokuBoard>>(DeconstructRawPuzzlesInToPuzzles(contents.AsSpan().Slice(FirstPuzzleIndex), TotalPuzzle));
+            return DeconstructRawPuzzlesInToPuzzles(contents.AsSpan().Slice(FirstPuzzleIndex), TotalPuzzle);
         }
 
         private static (int TotalPuzzle, int FirstPuzzleIndex) ReadExpectedPuzzleAmount(byte[] sodokuContents)
@@ -89,6 +88,15 @@ namespace Sudoku.Parser.File
         private static SudokuBoard ConstructBoardFromCells(ref Cell[,] cells)
         {
             return new SudokuBoard(ref cells);
+        }
+
+        private static async Task<byte[]> ReadBytesFromReader(IReader reader)
+        {
+            var stream = await reader.GetStream();
+
+            byte[] readbytes = new byte[stream.Length];
+            await stream.ReadAsync(readbytes, 0, (int)stream.Length);
+            return readbytes;
         }
     }
 }

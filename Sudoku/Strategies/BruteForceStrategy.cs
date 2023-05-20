@@ -2,10 +2,12 @@
 {
     public class BruteForceStrategy : IStrategy
     {
-        private SudokuBoard _board;
+        private SudokuBoard _board = default!;
 
         public void Run(SudokuBoard board)
         {
+            ArgumentNullException.ThrowIfNull(board, nameof(board));
+
             _board = board;
 
             if (!board.IsBoardStateValid())

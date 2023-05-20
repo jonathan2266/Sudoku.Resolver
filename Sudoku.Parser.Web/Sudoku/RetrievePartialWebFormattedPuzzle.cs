@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Sudoku.Parser.Normalization;
+using Sudoku.Parser.Readers;
 using Sudoku.Parser.Utilities;
 
 namespace Sudoku.Parser.Web.Sudoku
@@ -17,24 +18,24 @@ namespace Sudoku.Parser.Web.Sudoku
         private const string _valueAttribute = "v";
         private const string _isFixedValueCellClass = "fixe";
 
-        private readonly Task<IEnumerable<SudokuBoard>> _emptyValueResultCollection = Task.FromResult(Enumerable.Empty<SudokuBoard>());
-
-        public RetrievePartialWebFormattedPuzzle(string html, INormalize normalize)
+        public RetrievePartialWebFormattedPuzzle(INormalize normalize, UnorderedCellUtilities.Boundary boundary)
         {
             _normalization = normalize;
-
+            _boundary = boundary;
             _document = new HtmlDocument();
-            _document.LoadHtml(html);
         }
 
-        public Task<IEnumerable<SudokuBoard>> Load()
+        public async Task<IEnumerable<SudokuBoard>> Load(IReader reader)
         {
+            var stream = await reader.GetStream();
+            _document.Load(stream, reader.StreamEncoding);
+
             var baseElement = _document.GetElementbyId(_baseElementId);
             if (baseElement == null)
             {
-                return _emptyValueResultCollection;
+                return Enumerable.Empty<SudokuBoard>();
             }
-
+            
             var cellCollection = ReadFixedCellCollectionFromBase(baseElement);
             var unorderedCellCollection = ConvertCellCollectionToUnorderedCells(cellCollection);
 
@@ -42,12 +43,12 @@ namespace Sudoku.Parser.Web.Sudoku
 
             if (!validator.IsValidCollection())
             {
-                return _emptyValueResultCollection;
+                return Enumerable.Empty<SudokuBoard>();
             }
 
-            return Task.FromResult<IEnumerable<SudokuBoard>>(new SudokuBoard[] {
+            return new SudokuBoard[] {
                 SudokuBoard.FromOrderedCells(validator.ToOrderedCollection())
-            });
+            };
         }
 
         private static IEnumerable<HtmlNode> ReadFixedCellCollectionFromBase(HtmlNode node)

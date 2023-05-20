@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Running;
 using Sudoku.Benchmark.Benchmarks;
 using Sudoku.Parser.File;
+using Sudoku.Parser.Readers;
 using Sudoku.Puzzles.Sets;
 using Sudoku.Strategies;
 using System;
@@ -19,7 +20,7 @@ namespace Sudoku.Benchmark
         static async Task Main(string[] args)
         {
             await Task.Delay(1);
-            await TestResolver();
+            //await TestResolver();
             //await Tests();
 
             if (_startBenchmarks)
@@ -39,8 +40,9 @@ namespace Sudoku.Benchmark
 
         private static async Task TestResolver()
         {
-            var loader = new RetrieveMinimalSudokuChallengePuzzlesBytes(Encoding.UTF8.GetBytes(Puzzles.Puzzles.all_17_clue_sudokus));
-            var boards = await loader.Load();
+            IReader _reader = ReaderFromString.CreateFromString(Puzzles.Puzzles.all_17_clue_sudokus);
+            var loader = new RetrieveMinimalSudokuChallengePuzzlesBytes();
+            var boards = await loader.Load(_reader);
 
             IStrategy strategy = new BruteForceStrategy();
 
@@ -55,13 +57,12 @@ namespace Sudoku.Benchmark
 
         private static async Task Tests()
         {
-            var loader = new RetrieveMinimalSudokuChallengePuzzlesBytes(Encoding.UTF8.GetBytes(Puzzles.Puzzles.all_17_clue_sudokus));
-            var boards = await loader.Load();
+            IReader _reader = ReaderFromString.CreateFromString(Puzzles.Puzzles.all_17_clue_sudokus);
+            var loader = new RetrieveMinimalSudokuChallengePuzzlesBytes();
+            var boards = await loader.Load(_reader);
 
             for (int i = 0; i < 10; i++)
             {
-
-
                 foreach (var board in boards)
                 {
                     if (!board.IsBoardStateValid())

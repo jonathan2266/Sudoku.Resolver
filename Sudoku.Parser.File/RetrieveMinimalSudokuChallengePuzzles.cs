@@ -1,21 +1,21 @@
-﻿using Sudoku.Parser.Utilities;
+﻿using Sudoku.Parser.Readers;
+using Sudoku.Parser.Utilities;
 
 namespace Sudoku.Parser.File
 {
     public class RetrieveMinimalSudokuChallengePuzzles : IRetrievePuzzle
     {
-        private readonly TextReader _reader;
         private readonly UnorderedCellUtilities.Boundary _boundary = new(9); //puzzles are in 9 size
 
-        public RetrieveMinimalSudokuChallengePuzzles(TextReader reader)
+        public RetrieveMinimalSudokuChallengePuzzles()
         {
-            _reader = reader;
         }
 
-        public Task<IEnumerable<SudokuBoard>> Load()
+        public async Task<IEnumerable<SudokuBoard>> Load(IReader reader)
         {
-            var deconstructionResult = DeconstuctFile(_reader);
-            return Task<IEnumerable<SudokuBoard>>.FromResult(DeconstructRawPuzzlesInToPuzzles(deconstructionResult.RawPuzzles).AsEnumerable());
+            using var streamReader = new StreamReader(await reader.GetStream());
+            var deconstructionResult = DeconstuctFile(streamReader);
+            return DeconstructRawPuzzlesInToPuzzles(deconstructionResult.RawPuzzles);
         }
 
         private SudokuBoard[] DeconstructRawPuzzlesInToPuzzles(string[] rawPuzzles)

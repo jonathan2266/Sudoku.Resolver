@@ -1,26 +1,26 @@
-﻿using Sudoku.Parser.Utilities;
+﻿using Sudoku.Parser.Readers;
+using Sudoku.Parser.Utilities;
 
 namespace Sudoku.Parser.File
 {
     public class RetrieveSudokuChallengePuzzles : IRetrievePuzzle
     {
-        private readonly TextReader _reader;
         private readonly UnorderedCellUtilities.Boundary _boundary = new(9); //puzzles are in 9 size
 
         private readonly int _totalLineLength;
 
-        public RetrieveSudokuChallengePuzzles(TextReader reader)
+        public RetrieveSudokuChallengePuzzles()
         {
-            _reader = reader;
-
             _totalLineLength = _boundary.ColumnLength * _boundary.RowLength;
         }
 
-        public async Task<IEnumerable<SudokuBoard>> Load()
+        public async Task<IEnumerable<SudokuBoard>> Load(IReader reader)
         {
-            int totalPuzzles = await ReadAmountOfPuzzlesInFile();
+            using var streamReader = new StreamReader(await reader.GetStream());
 
-            var boards = await ExtractBoardsFromReader();
+            int totalPuzzles = await ReadAmountOfPuzzlesInFile(streamReader);
+
+            var boards = await ExtractBoardsFromReader(streamReader);
 
             if (!ReturnedExpectedBoards(totalPuzzles, boards))
             {
@@ -30,13 +30,13 @@ namespace Sudoku.Parser.File
             return boards;
         }
 
-        private async Task<int> ReadAmountOfPuzzlesInFile()
+        private async Task<int> ReadAmountOfPuzzlesInFile(TextReader reader)
         {
-            var firstLine = await _reader.ReadLineAsync();
+            var firstLine = await reader.ReadLineAsync();
             return int.Parse(firstLine);
         }
 
-        private async Task<IEnumerable<SudokuBoard>> ExtractBoardsFromReader()
+        private async Task<IEnumerable<SudokuBoard>> ExtractBoardsFromReader(TextReader reader)
         {
             bool continueReading = true;
 
@@ -44,7 +44,7 @@ namespace Sudoku.Parser.File
 
             while (continueReading)
             {
-                var line = await _reader.ReadLineAsync();
+                var line = await reader.ReadLineAsync();
                 if (string.IsNullOrEmpty(line))
                 {
                     break;

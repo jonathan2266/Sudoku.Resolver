@@ -1,8 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using Sudoku.Parser;
 using Sudoku.Parser.File;
-using System.Text;
+using Sudoku.Parser.Readers;
 
 namespace Sudoku.Benchmark.Benchmarks
 {
@@ -10,9 +9,11 @@ namespace Sudoku.Benchmark.Benchmarks
     [MemoryDiagnoser]
     public class SudokuChallangeReadingBenchmark
     {
-        private IRetrievePuzzle _reader = null;
-        private IRetrievePuzzle _reader2 = null;
-        private IRetrievePuzzle _reader3 = null;
+        private IRetrievePuzzle _retriever = default!;
+        private IRetrievePuzzle _retriever2 = default!;
+        private IRetrievePuzzle _retriever3 = default!;
+
+        private IReader _reader = default!;
 
         public SudokuChallangeReadingBenchmark()
         {
@@ -22,31 +23,27 @@ namespace Sudoku.Benchmark.Benchmarks
         [GlobalSetup]
         public void GlobalSetup()
         {
-     
+            _reader = ReaderFromString.CreateFromString(Puzzles.Puzzles.all_17_clue_sudokus);
         }
 
         [IterationSetup]
         public void IterationSetup()
         {
-            TextReader reader = new StringReader(Puzzles.Puzzles.all_17_clue_sudokus);
-            _reader = new RetrieveSudokuChallengePuzzles(reader);
-
-            _reader2 = new RetrieveMinimalSudokuChallengePuzzles(new StringReader(Puzzles.Puzzles.all_17_clue_sudokus));
-            _reader3 = new RetrieveMinimalSudokuChallengePuzzlesBytes(Encoding.UTF8.GetBytes(Puzzles.Puzzles.all_17_clue_sudokus));
+            _retriever = new RetrieveSudokuChallengePuzzles();
+            _retriever2 = new RetrieveMinimalSudokuChallengePuzzles();
+            _retriever3 = new RetrieveMinimalSudokuChallengePuzzlesBytes();
         }
 
         [Benchmark(Baseline = true)]
         public async Task TimeToReadFileAndParseToBoard()
         {
-            await _reader.Load();
+            await _retriever.Load(_reader);
         }
-
- 
 
         [Benchmark]
         public async Task TimeToReadFileAndParseToBoardAndValidateAllBoards()
         {
-            var boards = await _reader.Load();
+            var boards = await _retriever.Load(_reader);
 
             bool anyInvalid = false;
 
@@ -67,13 +64,13 @@ namespace Sudoku.Benchmark.Benchmarks
         [Benchmark(Baseline = false)]
         public async Task TimeToReadFileAndParseToBoardFastV2()
         {
-            await _reader2.Load();
+            await _retriever2.Load(_reader);
         }
 
         [Benchmark]
         public async Task TimeToReadFileAndParseToBoardAndValidateAllBoardsFastV2()
         {
-            var boards = await _reader2.Load();
+            var boards = await _retriever2.Load(_reader);
 
             bool anyInvalid = false;
 
@@ -94,13 +91,13 @@ namespace Sudoku.Benchmark.Benchmarks
         [Benchmark(Baseline = false)]
         public async Task TimeToReadFileAndParseToBoardFastV3()
         {
-            await _reader3.Load();
+            await _retriever3.Load(_reader);
         }
 
         [Benchmark]
         public async Task TimeToReadFileAndParseToBoardAndValidateAllBoardsFastV3()
         {
-            var boards = await _reader3.Load();
+            var boards = await _retriever3.Load(_reader);
 
             bool anyInvalid = false;
 

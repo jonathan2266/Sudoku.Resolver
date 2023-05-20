@@ -9,7 +9,7 @@ namespace Sudoku.Tests
     [TestClass]
     public class SudokuBoardLargeTests
     {
-        private SudokuBoard _board = null;
+        private SudokuBoard _board = default!;
 
 
         [TestInitialize]
