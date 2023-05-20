@@ -2,6 +2,7 @@
 using Sudoku.Benchmark.Benchmarks;
 using Sudoku.Parser.File;
 using Sudoku.Puzzles.Sets;
+using Sudoku.Strategies;
 using System;
 using System.Collections.Immutable;
 using System.Numerics;
@@ -18,7 +19,7 @@ namespace Sudoku.Benchmark
         static async Task Main(string[] args)
         {
             await Task.Delay(1);
-
+            await TestResolver();
             //await Tests();
 
             if (_startBenchmarks)
@@ -34,6 +35,22 @@ namespace Sudoku.Benchmark
 
             Console.WriteLine("Done");
             Console.ReadKey();
+        }
+
+        private static async Task TestResolver()
+        {
+            var loader = new RetrieveMinimalSudokuChallengePuzzlesBytes(Encoding.UTF8.GetBytes(Puzzles.Puzzles.all_17_clue_sudokus));
+            var boards = await loader.Load();
+
+            IStrategy strategy = new BruteForceStrategy();
+
+            foreach (var board in boards)
+            {
+                strategy.Run(board);
+            }
+
+            await Task.Delay(1);
+
         }
 
         private static async Task Tests()
