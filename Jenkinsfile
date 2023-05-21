@@ -14,7 +14,7 @@ pipeline {
 				sh 'dotnet test'
 			}
 		}
-		stage('Pack Nugets') {
+		stage('Pack Nuget Sudoku') {
 			steps {
 				sh 'dotnet pack ./Sudoku/Sudoku.csproj -c Release'
 				sh '''#!/bin/bash
@@ -22,6 +22,9 @@ pipeline {
 				dotnet nuget push ./${OUTPUT} -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
 				'''
 			}
+
+		}
+		stage('Pack Nuget Sudoku.Parser') {
 			steps {
 				sh 'dotnet pack ./Sudoku.Parser/Sudoku.Parser.csproj -c Release'
 				sh '''#!/bin/bash
@@ -29,6 +32,8 @@ pipeline {
 				dotnet nuget push ./${OUTPUT} -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
 				'''
 			}
+		}
+		stage('Pack Nuget Sudoku.Parser.Web') {
 			steps {
 				sh 'dotnet pack ./Sudoku.Parser.Web/Sudoku.Parser.Web.csproj -c Release'
 				sh '''#!/bin/bash
@@ -36,6 +41,8 @@ pipeline {
 				dotnet nuget push ./${OUTPUT} -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
 				'''
 			}
+		}
+		stage('Pack Nuget Sudoku.Parser.File') {
 			steps {
 				sh 'dotnet pack ./Sudoku.Parser.File/Sudoku.Parser.File.csproj -c Release'
 				sh '''#!/bin/bash
