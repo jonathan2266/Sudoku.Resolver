@@ -17,10 +17,9 @@ pipeline {
 		stage('Pack Nuget Sudoku') {
 			steps {
 				sh 'dotnet pack ./Sudoku/Sudoku.csproj -c Release'
-				sh 'cd ./Sudoku/bin/Release'
 				sh '''#!/bin/bash
-				OUTPUT=$(find ./ -name *.nupkg)
-				dotnet nuget push ${OUTPUT} -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
+				OUTPUT=$(find ./ -name Sudoku.*.nupkg)
+				dotnet nuget push ./${OUTPUT} -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
 				'''
 			}
 		}
