@@ -39,7 +39,7 @@ namespace Sudoku.Parser.Web.Tests
             var board = await _retriever.Load(_reader);
 
             Assert.IsNotNull(board);
-            Assert.IsFalse(board.Any());
+            Assert.IsTrue(board.Any());
             Assert.AreEqual(board.Count(), expectedPuzzles);
         }
 
