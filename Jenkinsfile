@@ -20,7 +20,7 @@ pipeline {
 				sh 'cd ./Sudoku/bin/Release'
 				sh '''#!/bin/bash
 				OUTPUT=$(find ./ -name *.nupkg)
-				dotnet nuget push OUTPUT -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
+				dotnet nuget push ${OUTPUT} -s http://192.168.1.17:3000//api/packages/Home/nuget/index.json --skip-duplicate
 				'''
 			}
 		}
