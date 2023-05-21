@@ -10,9 +10,9 @@ pipeline {
 				'''
 			}
 		}
-        stage ('Clean workspace') {
+        stage ('Restore Packages') {
 			steps {
-				cleanWs()
+				dotnetRestore
 			}
 		}
     }
