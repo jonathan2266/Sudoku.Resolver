@@ -12,7 +12,9 @@ pipeline {
 		}
         stage ('Restore Packages') {
 			steps {
-				dotnetRestore
+				sh '''#!/bin/bash
+				dotnet restore
+				'''
 			}
 		}
     }
