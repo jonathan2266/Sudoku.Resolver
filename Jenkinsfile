@@ -2,10 +2,18 @@ pipeline {
     agent any
 
     stages {
-        stage('Do nothing') {
-            steps {
-                sh '/bin/true'
-            }
-        }
+		tage('Setting the variables values') {
+			steps {
+				sh '''#!/bin/bash
+				ls
+                 echo "hello world" 
+				'''
+			}
+		}
+        stage ('Clean workspace') {
+			steps {
+				cleanWs()
+			}
+		}
     }
 }
