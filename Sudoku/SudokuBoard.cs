@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Enumerables;
-using System;
-using System.Linq;
 
 namespace Sudoku
 {
@@ -19,7 +17,7 @@ namespace Sudoku
         private readonly HashSet<int> _duplicateNumberDetector;
         private static readonly int[] _supportedBoardSizes = new int[2] { 9, 16 };
 
-        public SudokuBoard(Cell[,] cells): this(ref cells)
+        public SudokuBoard(Cell[,] cells) : this(ref cells)
         {
 
         }
@@ -137,7 +135,7 @@ namespace Sudoku
             Span2D<Cell> boardSpan = _board;
             int leftNormalizedRow = row / _internalBoardSquareSize * _internalBoardSquareSize;
             int leftNormalizedColumn = column / InternalSquareSize * InternalSquareSize;
-            
+
             return boardSpan.Slice(leftNormalizedRow, leftNormalizedColumn, _internalBoardSquareSize, _internalBoardSquareSize);
         }
 
