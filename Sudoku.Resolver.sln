@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser", "Sudoku.Par
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser.Web", "Sudoku.Parser.Web\Sudoku.Parser.Web.csproj", "{2B92FEE5-EF74-4B8E-A0D3-209C6EA6238B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Web.Tests", "Sudoku.Parser.Web.Tests\Sudoku.Parser.Web.Tests.csproj", "{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser.Web.Tests", "Sudoku.Parser.Web.Tests\Sudoku.Parser.Web.Tests.csproj", "{EF0BAC6D-B64F-4CA5-9B9D-92C684CD18EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.Tests", "Sudoku.Parser.Tests\Sudoku.Parser.Tests.csproj", "{A0E4A11A-8730-4A27-B7AF-C2056C722510}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser.Tests", "Sudoku.Parser.Tests\Sudoku.Parser.Tests.csproj", "{A0E4A11A-8730-4A27-B7AF-C2056C722510}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku.Parser.File", "Sudoku.Parser.File\Sudoku.Parser.File.csproj", "{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sudoku.Parser.File", "Sudoku.Parser.File\Sudoku.Parser.File.csproj", "{2C0F6CDD-3CE4-44A9-A73F-FD6E22961081}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

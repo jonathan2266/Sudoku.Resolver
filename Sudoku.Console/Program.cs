@@ -94,8 +94,9 @@ namespace Sudoku.Benchmark
 
         private static void RunBenchmarks()
         {
-            // var summary = BenchmarkRunner.Run<SudokuValidationBenchmark>();
+            var summary = BenchmarkRunner.Run<SudokuValidationBenchmark>();
             var summery2 = BenchmarkRunner.Run<SudokuChallangeReadingBenchmark>();
+            var summary3 = BenchmarkRunner.Run<SodokuSerializationBenchmark>();
         }
 
         private static void RunCustomTest()
