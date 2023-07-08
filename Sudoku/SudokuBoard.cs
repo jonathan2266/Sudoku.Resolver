@@ -7,7 +7,6 @@ namespace Sudoku
     {
         private readonly int _boardSize;
         private readonly int _internalBoardSquareSize;
-        private readonly int _internalBoardSquareUniqueNumbers;
 
         private readonly int _rowDimension = 0;
         private readonly int _columnDimension = 1;
@@ -29,8 +28,6 @@ namespace Sudoku
             _boardSize = cells.GetLength(_rowDimension);
             _internalBoardSquareSize = Convert.ToInt32(Math.Sqrt(_boardSize));
             ValidateBoardSizeAndInternalSquareSize();
-
-            _internalBoardSquareUniqueNumbers = _internalBoardSquareSize * _internalBoardSquareSize;
         }
 
         public ref Cell this[int row, int column]
@@ -96,11 +93,8 @@ namespace Sudoku
                 {
                     return false;
                 }
-            }
 
-            for (int column = 0; column < _board.GetLength(_columnDimension); column++)
-            {
-                var isColumnValid = IsBoardColumnValid(GetBoardColumn(column));
+                var isColumnValid = IsBoardColumnValid(GetBoardColumn(row)); //Board is validated to be square.
                 if (!isColumnValid)
                 {
                     return false;
