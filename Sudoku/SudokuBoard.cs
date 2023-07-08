@@ -17,9 +17,14 @@ namespace Sudoku
         private readonly HashSet<int> _duplicateNumberDetector;
         private static readonly int[] _supportedBoardSizes = new int[2] { 9, 16 };
 
-        public SudokuBoard(Cell[,] cells)
+        public SudokuBoard(Cell[,] cells) : this(ref cells)
         {
-            IsInitialBoardConfigurationValid(cells);
+
+        }
+
+        public SudokuBoard(ref Cell[,] cells)
+        {
+            IsInitialBoardConfigurationValid(ref cells);
 
             _board = cells;
             _boardSize = cells.GetLength(_rowDimension);
@@ -66,6 +71,11 @@ namespace Sudoku
         public bool IsBoardResolved()
         {
             return IsBoardStateValid() && DoesEachCellHaveAValue();
+        }
+
+        public static SudokuBoard FromOrderedCells(Cell[,] cells)
+        {
+            return new SudokuBoard(ref cells);
         }
 
         public void ResetState()
@@ -208,7 +218,7 @@ namespace Sudoku
             return true;
         }
 
-        private void IsInitialBoardConfigurationValid(Cell[,] cells)
+        private void IsInitialBoardConfigurationValid(ref Cell[,] cells)
         {
             if (cells.GetLength(_rowDimension) != cells.GetLength(_columnDimension))
             {

@@ -14,7 +14,7 @@ namespace Sudoku.Benchmark.Benchmarks
     [MemoryDiagnoser]
     public class SudokuValidationBenchmark
     {
-        private SudokuBoard _board;
+        private SudokuBoard _board = default!;
 
         public SudokuValidationBenchmark()
         {

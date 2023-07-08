@@ -1,16 +1,11 @@
 ﻿using Sudoku.Puzzles.Sets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sudoku.Tests
 {
     [TestClass]
     public class SudokuBoardTests
     {
-        private SudokuBoard _board = null;
+        private SudokuBoard? _board = null;
 
 
         [TestInitialize]
