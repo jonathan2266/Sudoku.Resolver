@@ -14,7 +14,6 @@ namespace Sudoku
 
 
         private readonly Cell[,] _board;
-        private readonly HashSet<int> _duplicateNumberDetector;
         private static readonly int[] _supportedBoardSizes = new int[2] { 9, 16 };
 
         public SudokuBoard(Cell[,] cells) : this(ref cells)
@@ -28,12 +27,10 @@ namespace Sudoku
 
             _board = cells;
             _boardSize = cells.GetLength(_rowDimension);
-            _internalBoardSquareSize = (int)Math.Sqrt(_boardSize);
+            _internalBoardSquareSize = Convert.ToInt32(Math.Sqrt(_boardSize));
             ValidateBoardSizeAndInternalSquareSize();
 
             _internalBoardSquareUniqueNumbers = _internalBoardSquareSize * _internalBoardSquareSize;
-
-            _duplicateNumberDetector = new HashSet<int>(_internalBoardSquareUniqueNumbers);
         }
 
         public ref Cell this[int row, int column]
@@ -92,12 +89,19 @@ namespace Sudoku
 
         private bool ValidateIfAllRowsAndColumnsAreValid()
         {
-            for (int rowAndColumn = 0; rowAndColumn < _board.GetLength(_rowDimension); rowAndColumn++)
+            for (int row = 0; row < _board.GetLength(_rowDimension); row++)
             {
-                var isRowValid = IsBoardRowValid(GetBoardRow(rowAndColumn));
-                var isColumnValid = IsBoardColumnValid(GetBoardColumn(rowAndColumn));
+                var isRowValid = IsBoardRowValid(GetBoardRow(row));
+                if (!isRowValid)
+                {
+                    return false;
+                }
+            }
 
-                if (!isRowValid || !isColumnValid)
+            for (int column = 0; column < _board.GetLength(_columnDimension); column++)
+            {
+                var isColumnValid = IsBoardColumnValid(GetBoardColumn(column));
+                if (!isColumnValid)
                 {
                     return false;
                 }
@@ -144,47 +148,61 @@ namespace Sudoku
             return boardSpan.GetColumn(column);
         }
 
-        private bool IsBoardRowValid(Span<Cell> boardRow)
+        private static bool IsBoardRowValid(Span<Cell> boardRow)
         {
-            _duplicateNumberDetector.Clear();
+            int merged = 0;
 
-            int totalValuesAdded = 0;
             for (int i = 0; i < boardRow.Length; i++)
             {
                 ref var cell = ref boardRow[i];
                 if (cell.Value.HasValue)
                 {
-                    totalValuesAdded++;
-                    _duplicateNumberDetector.Add(cell.Value.Value);
+                    int x = 1;
+
+                    x <<= cell.Value.Value;
+
+                    if ((x & merged) > 0)
+                    {
+                        return false;
+                    }
+
+                    merged |= x;
                 }
             }
 
-            return _duplicateNumberDetector.Count == totalValuesAdded;
+            return true;
         }
 
-        private bool IsBoardColumnValid(RefEnumerable<Cell> boardColumn)
+        private static bool IsBoardColumnValid(RefEnumerable<Cell> boardColumn)
         {
-            _duplicateNumberDetector.Clear();
+            int merged = 0;
 
-            int totalValuesAdded = 0;
             for (int i = 0; i < boardColumn.Length; i++)
             {
                 ref var cell = ref boardColumn[i];
                 if (cell.Value.HasValue)
                 {
-                    totalValuesAdded++;
-                    _duplicateNumberDetector.Add(cell.Value.Value);
+                    int x = 1;
+
+                    x <<= cell.Value.Value;
+
+                    if ((x & merged) > 0)
+                    {
+                        return false;
+                    }
+
+                    merged |= x;
                 }
             }
 
-            return _duplicateNumberDetector.Count == totalValuesAdded;
+            return true;
         }
 
         private bool IsSudokuSquareValid(Span2D<Cell> square)
         {
-            _duplicateNumberDetector.Clear();
+            int merged = 0;
 
-            int totalValuesAdded = 0;
+
             for (int row = 0; row < square.Width; row++)
             {
                 for (int column = 0; column < square.Height; column++)
@@ -192,13 +210,21 @@ namespace Sudoku
                     ref var cell = ref square[row, column];
                     if (cell.Value.HasValue)
                     {
-                        totalValuesAdded++;
-                        _duplicateNumberDetector.Add(cell.Value.Value);
+                        int x = 1;
+
+                        x <<= cell.Value.Value;
+
+                        if ((x & merged) > 0)
+                        {
+                            return false;
+                        }
+
+                        merged |= x;
                     }
                 }
             }
 
-            return _duplicateNumberDetector.Count == totalValuesAdded;
+            return true;
         }
 
         private bool DoesEachCellHaveAValue()
