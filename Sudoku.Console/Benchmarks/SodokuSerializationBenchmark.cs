@@ -10,7 +10,7 @@ namespace Sudoku.Benchmark.Benchmarks
     public class SodokuSerializationBenchmark
     {
         private SudokuBoard[] _boards = default!;
-        private ISerializeBoards _boardSerializer = default!;
+        private ISerializeBoards<SudokuBoard> _boardSerializer = default!;
 
         public SodokuSerializationBenchmark()
         {
